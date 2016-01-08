@@ -164,6 +164,27 @@ function inject(bot) {
     }
   }
 
+  var following = false;
+  function follow(username) {
+    following = true;
+    var player = bot.players[username].entity;
+    if (following === true) {
+      if (results.status === 'noPath' || results.status === 'timeout') {
+        bot.navigate.emit("cannotFind", results.path);
+        following = false;
+      }
+      var results = findPathSync(player.position);
+      bot.navigate.emit("pathPartFound", results.path);
+      walk(results.path, function() {
+        follow(username);
+      })
+    }
+  }
+
+  function stopFollowing() {
+    following = false;
+  }
+
   function getNeighbors(node) {
     // for each cardinal direction:
     // "." is head. "+" is feet and current location.
