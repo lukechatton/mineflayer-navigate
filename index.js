@@ -170,10 +170,6 @@ function inject(bot) {
     following = true;
     var player = bot.players[username].entity;
     if (following === true) {
-      if (results.status === 'noPath' || results.status === 'timeout') {
-        bot.navigate.emit("cannotFind", results.path);
-        following = false;
-      }
       var results = findPathSync(player.position);
       bot.navigate.emit("pathPartFound", results.path);
       walk(results.path, function() {
