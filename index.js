@@ -165,31 +165,25 @@ function inject(bot) {
     }
   }
 
-  var followTick = '';
-  function follow(username) {
-    followTick = setInterval(function() {
-      bot.navigate.to(bot.players[username].entity.position);
-    }, 200);
-  }
-
-  /*
   var following = false;
   function follow(username) {
     following = true;
+    bot.setControlState('sprint', true);
     var player = bot.players[username].entity;
     if (following === true) {
-      var results = findPathSync(player.position);
-      bot.navigate.emit("pathPartFound", results.path);
-      walk(results.path, function() {
+      var path = findPathSync(player.position, {
+        timeout: 999,
+        endRadius: 1,
+      });
+      walk(path.path, function() {
         follow(username);
       })
     }
   }
-  */
 
   function stopFollowing() {
-    clearInterval(followTick);
-    followTick = '';
+    following = false;
+    bot.clearControlStates();
   }
 
   function getNeighbors(node) {
