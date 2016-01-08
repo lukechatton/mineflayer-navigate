@@ -166,7 +166,7 @@ function inject(bot) {
   }
 
   var following = false;
-  var follow = function(username) {
+  function follow(username) {
     following = true;
     var player = bot.players[username].entity;
     if (following === true) {
