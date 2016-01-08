@@ -165,6 +165,14 @@ function inject(bot) {
     }
   }
 
+  var followTick = '';
+  function follow(username) {
+    followTick = setInterval(function() {
+      bot.navigate.to(bot.players[username].entity.position);
+    }, 200);
+  }
+
+  /*
   var following = false;
   function follow(username) {
     following = true;
@@ -177,9 +185,11 @@ function inject(bot) {
       })
     }
   }
+  */
 
   function stopFollowing() {
-    following = false;
+    clearInterval(followTick);
+    followTick = '';
   }
 
   function getNeighbors(node) {
