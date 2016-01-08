@@ -1,5 +1,5 @@
 var aStar = require('a-star')
-  , EventEmitter = require('events').EventEmitter
+    , EventEmitter = require('events').EventEmitter
 
 module.exports = init;
 
@@ -31,6 +31,7 @@ function inject(bot) {
 
   bot.navigate = new EventEmitter();
   bot.navigate.to = navigateTo;
+  bot.navigate.follow = follow;
   bot.navigate.stop = noop;
   bot.navigate.walk = walk;
   bot.navigate.findPathSync = findPathSync;
@@ -165,7 +166,7 @@ function inject(bot) {
   }
 
   var following = false;
-  function follow(username) {
+  var follow = function(username) {
     following = true;
     var player = bot.players[username].entity;
     if (following === true) {
@@ -369,7 +370,7 @@ function inject(bot) {
 
   function isSafe(block) {
     return block.boundingBox === 'empty' &&
-      !bot.navigate.blocksToAvoid[block.type];
+        !bot.navigate.blocksToAvoid[block.type];
   }
 
 }
